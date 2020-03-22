@@ -3,15 +3,15 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send("It works!");
+  res.render("hazhoz.ejs");
 });
 
 router.get('/hazhoz', function(req, res, next) {
   res.render("hazhoz.ejs");
 });
 
-router.get('/hazhoz', function(req, res, next) {
-  res.send("Hazhozszallitas!");
+router.get('*', function(req, res, next) {
+  res.render("hazhoz.ejs");
 });
 
 module.exports = router;

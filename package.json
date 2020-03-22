@@ -9,6 +9,7 @@
   "email": "reklam11@lautnerbt.info",
   "license": "UNLICENSED",
   "dependencies": {
+    "aws-sdk": "^2.643.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.0.1",

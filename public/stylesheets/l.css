@@ -10,6 +10,10 @@ nav {
     float: right;
 }
 
+.spacer-row {
+    background-color: #ffffff !important;
+}
+
 #arlista-table {
     min-width: 300px;
     max-width: 800px;
