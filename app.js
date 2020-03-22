@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/hazhoz', indexRouter);
-app.use('*', indexRouter);
+//app.use('*', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -36,7 +36,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  var error = err;
+  res.render("error.ejs", {error: error});
 });
 
 module.exports = app;
