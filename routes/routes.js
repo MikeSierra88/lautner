@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render("hazhoz.ejs");
+  res.redirect('hazhoz');
 });
 
 router.get('/hazhoz', function(req, res, next) {
@@ -15,7 +15,7 @@ router.get('/husvet', function(req, res, next) {
 });
 
 router.get('*', function(req, res, next) {
-  res.render("hazhoz.ejs");
+  res.redirect('/');
 });
 
 module.exports = router;
