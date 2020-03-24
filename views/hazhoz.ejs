@@ -16,38 +16,14 @@
             </button>
           </h2>
         </div>
-    
+    <% termekek.forEach(function(termek){ %>
+      <%= termek.nev %>
+      <%= termek.kiszereles %>
+      <%= termek.ar %>
+    <% }); %>
         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-              <table class="table table-sm table-striped table-bordered" id="arlista-table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">Termékek</th>
-                      <th scope="col">Kiszerelés</th>
-                      <th scope="col">Ár</th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-wrap">
-                    <% kategoriak.forEach(function(kategoria){ %>
-                      <tr class="thead-light">
-                        <th scope="row" colspan="3"><%= kategoria.kat %></th>
-                      </tr>  
-                    
-                      <% termekek.forEach(function(termek){ %>
-                        <% if (termek.kategoria == kategoria.kat) { %>
-                          <tr>
-                            <td><%= termek.nev %></td>
-                            <td><%= termek.kiszereles %></td>
-                            <td><%= termek.ar %></td>
-                          </tr>
-                        <% }; %>
-                      <% }); %>
-                        <tr class="spacer-row">
-                          <td  colspan="3">&nbsp;</td>
-                        </tr>
-                    <% }); %>
-                  </tbody>
-              </table>
+              <%- include('partials/generateTable'); -%>
               <blockquote class="blockquote text-center">
                 <p>Egész torták egyedi árazással elérhetőek 3 napos határidővel.</p>
                 <p>A fenti árak az ÁFA-t tartalmazzák.</p>
