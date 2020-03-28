@@ -2,6 +2,11 @@ nav {
     background-color: #3F729B;
 }
 
+.deco-none {
+    color: inherit;
+    text-decoration: none;
+}
+
 .spaced {
     max-width: 350px;
 }
@@ -10,11 +15,15 @@ nav {
     float: right;
 }
 
+.editcell {
+    width: 50px;
+}
+
 .spacer-row {
     background-color: #ffffff !important;
 }
 
-#arlista-table {
+.arlista-width {
     min-width: 300px;
     max-width: 800px;
     margin: auto;

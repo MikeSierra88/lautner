@@ -1,0 +1,88 @@
+<%- include('partials/header'); -%>
+<%- include('partials/navbar'); -%>
+
+<table class="table table-sm table-striped table-bordered arlista-width">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Termékek</th>
+        <th scope="col">Kiszerelés</th>
+        <th scope="col">Ár</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody class="text-wrap">
+      <% kategoriak.forEach(function(kategoria){ %>
+        <tr class="thead-light">
+          <th scope="row" colspan="3"><%= kategoria.kat %></th>
+          <th scope="row"class='editcell'>
+              <a href="" class='deco-none'><i class="fas fa-edit"></i></a>
+              <a href="" class='deco-none'><i class="far fa-trash-alt"></i></a>
+          </th>
+        </tr>  
+        <% kategoria.termekek.forEach(function(termek){ %>
+          <% var artipus = ""; %>
+          <% if (['lédig', 'kg'].includes(termek.kiszereles)) {artipus = " Ft/kg"}
+              else {artipus = " Ft"} %>
+          <tr>
+            <td><%= termek.nev %></td>
+            <td><%= termek.kiszereles %></td>
+            <td><%= termek.ar %><%=artipus%></td>
+            <td class='editcell'>
+                <a href="" class='deco-none'><i class="fas fa-edit"></i></a>
+                <a href="" class='deco-none'><i class="far fa-trash-alt"></i></a>
+            </td>
+          </tr>
+        <% }); %>
+      <% }); %>   
+  </tbody>
+</table>
+
+<!-- Uj termek form -->
+<div class="container mt-5 arlista-width">
+    <h4>Uj termek hozzaadasa</h5>
+    <form action="/arlistak/<%=arlista.url%>//termek" method="POST">
+        <div class='form-group row'>
+            <label for='nev' class='col-sm-2 col-form-label'>Nev</label>
+            <div class='col-sm-10'>
+                <input type='text' class='form-control' name='nev' placeholder='nev' id='nev'>
+            </div>
+        </div>
+        <div class='form-group row'>
+            <label for='kateg' class='col-sm-2 col-form-label'>Kategoria</label>
+            <div class='col-sm-10'>
+                <select class="form-control" name='kateg' id='kateg'>
+                    <option value="" selected disabled>Valassz kategoriat!</option>
+                    <% kategoriak.forEach(function(kategoria){ %>
+                    <option value='<%=kategoria._id%>'><%= kategoria.kat %></option>
+                    <% }); %>
+                    <option value='new'>Uj kategoria</option>
+                </select>
+            </div>
+        </div>   
+        <div class='form-group row d-none' id="ujkatdiv">
+            <label for='ujkateg' class='col-sm-2 col-form-label'>Kategoria</label>
+            <div class='col-sm-10'>
+                <input type='text' class='form-control' name='ujkateg' placeholder='uj kategoria' id='ujkateg'>
+            </div>
+        </div>
+        <div class='form-group row'>
+            <label for='kiszereles' class='col-sm-2 col-form-label'>Kiszereles</label>
+            <div class='col-sm-10'>
+                <input type='text' class='form-control' name='kiszereles' placeholder='kiszereles'>
+            </div>
+        </div>
+        <div class='form-group row'>
+            <label for='kiszereles' class='col-sm-2 col-form-label'>Ar</label>
+            <div class='col-sm-10'>
+                <div class='input-group'>
+                    <input type='text' class='form-control' name='ar' placeholder='ar'>
+                    <span class='input-group-addon'>&nbsp;Ft</span>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+    </form>
+</div>
+
+<script src="/javascript/dbedit.js" defer="defer"></script>
+<%- include('partials/footer'); -%>

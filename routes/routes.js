@@ -9,64 +9,7 @@ router.get('/', function(req, res, next) {
   res.redirect('arlistak');
 });
 
-// var termekek = [
-//   {nev: "Minyon", kategoria: "sutemeny", kiszereles: "darab", ar:"250 Ft"},
-//   {nev: "Kardinalis", kategoria: "sutemeny", kiszereles: "darab", ar:"350 Ft"},
-//   {nev: "Teasutemeny", kategoria: "sutemeny", kiszereles: "ledig", ar:"3000 Ft/kg"},
-//   {nev: "Csokifagyi", kategoria: "fagyi", kiszereles: "doboz", ar:"1500 Ft"},
-//   {nev: "Csokitorta", kategoria: "torta", kiszereles: "torta", ar:"4500 Ft"}
-// ]
-
-// Seed database
-
-// Arlista.create({
-//   url: "hazhoz",
-//   title: "Házhoz szállítási ajánlatunk"
-//   }, function(err, arlista) {
-//     if (err) {
-//       console.log(err);
-//     } 
-// });
-
-// Arlista.findOne({ url: "hazhoz" }, function(err, foundArlista) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     var newKat = new Kategoria({
-//       kat: "Tortaszeletek",
-//       arlista: foundArlista._id,
-//       termekek: []
-//     });
-//     newKat.save(function(err) {
-//       if (err) { console.log(err) }
-//       else console.log("Saved");
-//     });
-//   }
-// });
-
-// Arlista.findOne({ url: "hazhoz" }, function(err, foundArlista) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     Kategoria.findOne({arlista: foundArlista._id}, function (err, foundKategoria) {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         var newTermek = new Termek({
-//           nev: "Minyon",
-//           kiszereles: "darab",
-//           ar: 250
-//         });
-//         foundKategoria.termekek.push(newTermek);
-//         foundKategoria.save(function(err) {
-//           if (err) { console.log(err) }
-//           else console.log("Saved");
-//         });
-//       }
-//     });
-//   }
-// });
-
+// GET arlistak aggregate
 router.get('/arlistak', function(req, res, next) {
   Arlista.find({}, function(err, arlistak){
     if (err) {
@@ -77,6 +20,7 @@ router.get('/arlistak', function(req, res, next) {
   });
 });
 
+// GET arlista show page by url
 router.get('/arlistak/:arlistaUrl', function(req, res, next) {
   Arlista.findOne({url: req.params.arlistaUrl}, function(err, foundArlista){
     if (err) {
@@ -87,7 +31,6 @@ router.get('/arlistak/:arlistaUrl', function(req, res, next) {
           if (err) {
             console.log(err);
           } else {
-            
             res.render("showArlista", {arlista: foundArlista, kategoriak: foundKategoriak});
           }
         });
@@ -98,13 +41,82 @@ router.get('/arlistak/:arlistaUrl', function(req, res, next) {
   });
 });
 
-router.post('/hazhoz', function (req, res, next) {
-  
-  res.redirect('/hazhoz');
+// POST new arlista
+router.post('/arlista', async function (req, res, next) {
+  var arlista = new Arlista({
+      url: req.body.url,
+      title: req.body.title
+    });
+  try {
+    
+    arlista.save();
+  } catch (err) {
+    console.log(err);
+  }
+  var redirectUrl = "/arlistak/"+arlista.url+"/edit"
+  res.redirect(redirectUrl);
 });
 
-router.get('/arlistak/new', function(req, res, next){
-  res.render('new', {});
+// GET show arlista edit form
+router.get('/arlistak/:arlistaUrl/edit', function(req, res, next) {
+  Arlista.findOne({url: req.params.arlistaUrl}, function(err, foundArlista){
+    if (err) {
+      console.log(err);
+    } else {
+      if  (foundArlista) {
+        Kategoria.find({arlista: foundArlista._id}).exec(function (err, foundKategoriak) {
+          if (err) {
+            console.log(err);
+          } else {
+            res.render("editArlista", {arlista: foundArlista, kategoriak: foundKategoriak});
+          }
+        });
+      } else {
+        res.redirect('/arlista');
+      }
+    }
+  });
+});
+
+// POST new termek
+router.post('/arlistak/:arlistaUrl/termek', async function(req, res, next) {
+  var newTermek = new Termek({
+        nev: req.body.nev,
+        kiszereles: req.body.kiszereles,
+        ar: req.body.ar
+      });
+  try {
+    var foundArlista = await Arlista.findOne({ url: req.params.arlistaUrl });
+    if (req.body.kateg == "new") {
+      var ujKat = new Kategoria({
+        kat: req.body.ujkateg,
+        arlista: foundArlista._id,
+        termekek: [newTermek]
+      });
+      await ujKat.save();
+      console.log(ujKat);
+    } else {
+      var foundKategoria = await Kategoria.findById(req.body.kateg);
+      foundKategoria.termekek.push(newTermek);
+      await foundKategoria.save();
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';
+  res.redirect(renderUrl);
+});
+
+// DELETE arlista
+router.delete("/arlistak/:arlistaUrl", function(req, res){
+  res.send("delete route reached");
+});
+
+// DELETE kategoria
+
+// DELETE termek
+router.delete("/arlistak/:arlistaUrl/:kategoria/:termek", function(req, res){
+  res.send("delete route reached");
 });
 
 router.get('*', function(req, res, next) {

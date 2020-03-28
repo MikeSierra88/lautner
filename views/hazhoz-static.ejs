@@ -1,0 +1,207 @@
+<%- include('partials/header'); -%>
+<%- include('partials/navbar'); -%>
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Árlista</h1>
+      <p class="lead">Házhoz szállítási ajánlatunk</p>
+    </div>
+  </div>
+  <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Termékek
+            </button>
+          </h2>
+        </div>
+    
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+              <table class="table table-sm table-striped table-bordered" id="arlista-table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Termékek</th>
+                      <th scope="col">Kiszerelés</th>
+                      <th scope="col">Ár</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-wrap">
+                    <tr class="thead-light">
+                      <th scope="row" colspan="3">Sütemények</th>
+                    </tr>  
+                    <tr>
+                      <td>Gesztenyepüré</td>
+                      <td>15 dkg/doboz</td>
+                      <td>600 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Somlói galuska</td>
+                      <td>20 dkg/doboz</td>
+                      <td>600 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Teasütemény</td>
+                      <td>lédig</td>
+                      <td>3000 Ft/kg</td>
+                    </tr>
+                    <tr>
+                      <td>Sajtos rudacska</td>
+                      <td>lédig</td>
+                      <td>3000 Ft/kg</td>
+                    </tr>
+                    <tr>
+                      <td>Diós zserbó</td>
+                      <td>darab</td>
+                      <td>250 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Malomkerék</td>
+                      <td>darab</td>
+                      <td>400 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Párizsi rúd	</td>
+                      <td>darab</td>
+                      <td>300 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Kardinális</td>
+                      <td>darab</td>
+                      <td>350 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Minyon</td>
+                      <td>darab</td>
+                      <td>250 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Puncs rolád</td>
+                      <td>darab</td>
+                      <td>250 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Keksz tekercs</td>
+                      <td>darab</td>
+                      <td>250 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Feketeerdő kocka</td>
+                      <td>darab</td>
+                      <td>400 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Piskóta rolád</td>
+                      <td>darab</td>
+                      <td>200 Ft</td>
+                    </tr>
+                    <tr class="spacer-row">
+                      <td  colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr class="thead-light">
+                      <th scope="row" colspan="3">Fagylalt (5 gombóc, 25 dkg/doboz)</th>
+                    </tr>
+                    <tr>
+                      <td>Vanília</td>
+                      <td>doboz</td>
+                      <td>1500 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Csoki</td>
+                      <td>doboz</td>
+                      <td>1500 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Puncs</td>
+                      <td>doboz</td>
+                      <td>1500 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Karamell</td>
+                      <td>doboz</td>
+                      <td>1500 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Eper</td>
+                      <td>doboz</td>
+                      <td>1500 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Citrom</td>
+                      <td>doboz</td>
+                      <td>1500 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Joghurtos meggy</td>
+                      <td>doboz</td>
+                      <td>1500 Ft</td>
+                    </tr>
+                    <tr>
+                      <td>Cukormentes málna</td>
+                      <td>doboz</td>
+                      <td>1500 Ft</td>
+                    </tr>
+                  </tbody>
+              </table>
+              <div class="container">
+                <blockquote class="blockquote text-center">
+                  <p>Egész torták egyedi árazással elérhetőek 3 napos határidővel. <br />
+                  (Rövidebb határidővel kapacitásaink függvényében. Érdeklődjön telefonon!)</p>
+                  <p>A fenti árak az ÁFA-t tartalmazzák.</p>
+                </blockquote>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Szállítási információ
+            </button>
+          </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+          <div class="card-body">
+              <ul class="list-unstyled">
+                  <li>A 13 óráig leadott rendéleseket aznap szállitjuk a készlet erejéig. (Kivéve egész torták)</li>
+                  <li>Szállítási díjak:
+                    <ul>
+                      <li>5000 Forint feletti rendelés esetén ingyenes!</li>
+                      <li>Mosonmagyaróvár területére: 500 Ft</li>
+                      <li>Városon kívül: kilométerenként* 100 Ft</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <small>* Szent István király út 68-tól a megadott címig, Google térképen tervezett legrövidebb útvonallal</small>
+                  </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Kapcsolat
+            </button>
+          </h2>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+          <div class="card-body">
+              <ul class="list-unstyled">
+                  <li>Rendelés telefonon:
+                      <ul>
+                          <li class="spaced">9-13 óráig Bálint Csabánál <span class="telszam">30/742-2186</span></li>
+                          <li class="spaced">9-17 óráig Lautner Marikánál <span class="telszam">30/993-6157</span></li>
+                      </ul>
+                  </li>
+
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+<%- include('partials/footer'); -%>

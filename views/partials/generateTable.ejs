@@ -1,31 +1,26 @@
-<table class="table table-sm table-striped table-bordered" id="arlista-table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">Termékek</th>
-                      <th scope="col">Kiszerelés</th>
-                      <th scope="col">Ár</th>
-                    </tr>
-                  </thead>
-                  <tbody class="text-wrap">
-                    <% for (i = 0; i < kategoriak.length; i++) { %>
-                      <tr class="thead-light">
-                        <th scope="row" colspan="3"><%= kategoriak[i].kat %></th>
-                      </tr>  
-                    
-                      <% termekek.forEach(function(termek){ %>
-                        <% if (termek.kategoria == kategoriak[i].kat) { %>
-                          <tr>
-                            <td><%= termek.nev %></td>
-                            <td><%= termek.kiszereles %></td>
-                            <td><%= termek.ar %></td>
-                          </tr>
-                        <% } %>
-                      <% }); %>
-                        <% if (i !=  kategoriak.length - 1) { %>
-                        <tr class="spacer-row">
-                          <td  colspan="3">&nbsp;</td>
-                        </tr>
-                        <% } %>
-                    <% }; %>
-                  </tbody>
-              </table>
+<table class="table table-sm table-striped table-bordered arlista-width">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Termékek</th>
+        <th scope="col">Kiszerelés</th>
+        <th scope="col">Ár</th>
+      </tr>
+    </thead>
+    <tbody class="text-wrap">
+      <% kategoriak.forEach(function(kategoria){ %>
+        <tr class="thead-light">
+          <th scope="row" colspan="3"><%= kategoria.kat %></th>
+        </tr>  
+        <% kategoria.termekek.forEach(function(termek){ %>
+          <% var artipus = ""; %>
+          <% if (['lédig', 'kg'].includes(termek.kiszereles)) {artipus = " Ft/kg"}
+              else {artipus = " Ft"} %>
+          <tr>
+            <td><%= termek.nev %></td>
+            <td><%= termek.kiszereles %></td>
+            <td><%= termek.ar %><%=artipus%></td>
+          </tr>
+        <% }); %>
+      <% }); %>   
+  </tbody>
+</table>

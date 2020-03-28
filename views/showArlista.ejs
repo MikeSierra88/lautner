@@ -7,7 +7,6 @@
       <p class="lead"><%= arlista.title %></p>
     </div>
   </div>
-    <p><%= arlista.url %> </p>
     
     <div class="accordion" id="accordionExample">
       <div class="card">
@@ -18,18 +17,17 @@
             </button>
           </h2>
         </div>
-    <p><a href="/<%=arlista.url%>/kategoriak/new">Uj kategoria</a></p>
-    
-    <%= kategoriak %>
-        <!--<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">-->
-        <!--  <div class="card-body">-->
-        <!--      <%- // include('partials/generateTable'); -%>-->
-        <!--      <blockquote class="blockquote text-center">-->
-        <!--        <p>Egész torták egyedi árazással elérhetőek 3 napos határidővel.</p>-->
-        <!--        <p>A fenti árak az ÁFA-t tartalmazzák.</p>-->
-        <!--      </blockquote>-->
-        <!--  </div>-->
-        <!--</div>-->
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            <!-- Generate table from database  -->
+              <%- include('partials/generateTable'); -%>
+              <blockquote class="blockquote text-center">
+                <p>Egész torták egyedi árazással elérhetőek 3 napos határidővel.</p>
+                <p>A fenti árak az ÁFA-t tartalmazzák.</p>
+              </blockquote>
+          </div>
+        </div>
       </div>
       <div class="card">
         <div class="card-header" id="headingTwo">

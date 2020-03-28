@@ -5,7 +5,9 @@ var createError  = require('http-errors'),
     bodyParser   = require('body-parser'),
     logger       = require('morgan'),
     indexRouter  = require('./routes/routes'),
-    mongoose     = require('mongoose');
+    mongoose     = require('mongoose'),
+    methodOverride = require('method-override');
+
 
 var app = express();
 
@@ -25,7 +27,9 @@ mongoose.connect(LAUTNERDB_URI).
   
 var db = mongoose.connection;
   db.once('open', function() {
-  console.log('DB connected');
+    console.log('DB connected');
+    // Seed test data into database
+    //require('./models/seedData');
 });
 
 // view engine setup
@@ -38,6 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride("_method"));
 
 app.use('/', indexRouter);
 
