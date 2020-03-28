@@ -1,16 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var logger = require('morgan');
-var indexRouter = require('./routes/routes');
+var createError  = require('http-errors'),
+    express      = require('express'),
+    path         = require('path'),
+    cookieParser = require('cookie-parser'),
+    bodyParser   = require('body-parser'),
+    logger       = require('morgan'),
+    indexRouter  = require('./routes/routes'),
+    mongoose     = require('mongoose');
 
 var app = express();
 
 // connect database using mongoose
 const LAUTNERDB_URI = process.env.LAUTNERDB + '/test?retryWrites=true&w=majority';
-var mongoose = require('mongoose');
+
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -23,35 +24,9 @@ mongoose.connect(LAUTNERDB_URI).
   });
   
 var db = mongoose.connection;
-db.once('open', function() {
+  db.once('open', function() {
   console.log('DB connected');
-  // var kittySchema = new mongoose.Schema({
-  //   name: String
-  // }, {writeConcern: {w: 1}});
-  
-  // kittySchema.methods.speak = function () {
-  //   var greeting = this.name
-  //     ? "Meow name is " + this.name
-  //     : "I don't have a name";
-  //   console.log(greeting);
-  // }
-  
-  // var Kitten = mongoose.model('Kitten', kittySchema);
-  
-  // var fluffy = new Kitten({ name: 'fluffy' });
-  // fluffy.speak(); // "Meow name is fluffy"
-  
-  // fluffy.save(function (err, fluffy) {
-  //   if (err) return console.error(err);
-  //   fluffy.speak();
-  // });
-  
-  // Kitten.find(function (err, kittens) {
-  //   if (err) return console.error(err);
-  //   console.log(kittens);
-  // })
 });
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

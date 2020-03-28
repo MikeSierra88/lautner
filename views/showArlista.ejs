@@ -1,0 +1,83 @@
+<%- include('partials/header'); -%>
+<%- include('partials/navbar'); -%>
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Árlista</h1>
+      <p class="lead"><%= arlista.title %></p>
+    </div>
+  </div>
+    <p><%= arlista.url %> </p>
+    
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Termékek
+            </button>
+          </h2>
+        </div>
+    <p><a href="/<%=arlista.url%>/kategoriak/new">Uj kategoria</a></p>
+    
+    <%= kategoriak %>
+        <!--<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">-->
+        <!--  <div class="card-body">-->
+        <!--      <%- // include('partials/generateTable'); -%>-->
+        <!--      <blockquote class="blockquote text-center">-->
+        <!--        <p>Egész torták egyedi árazással elérhetőek 3 napos határidővel.</p>-->
+        <!--        <p>A fenti árak az ÁFA-t tartalmazzák.</p>-->
+        <!--      </blockquote>-->
+        <!--  </div>-->
+        <!--</div>-->
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Szállítási információ
+            </button>
+          </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+          <div class="card-body">
+              <ul class="list-unstyled">
+                  <li>A 13 óráig leadott rendéleseket aznap szállitjuk a készlet erejéig. (Kivéve egész torták)</li>
+                  <li>Szállítási díjak:
+                    <ul>
+                      <li>5000 Forint feletti rendelés esetén ingyenes!</li>
+                      <li>Mosonmagyaróvár területére: 500 Ft</li>
+                      <li>Városon kívül: kilométerenként* 100 Ft</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <small>* Szent István király út 68-tól a megadott címig, Google térképen tervezett legrövidebb útvonallal</small>
+                  </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Kapcsolat
+            </button>
+          </h2>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+          <div class="card-body">
+              <ul class="list-unstyled">
+                  <li>Rendelés telefonon:
+                      <ul>
+                          <li class="spaced">9-13 óráig Bálint Csabánál <span class="telszam">30/742-2186</span></li>
+                          <li class="spaced">9-17 óráig Lautner Marikánál <span class="telszam">30/993-6157</span></li>
+                      </ul>
+                  </li>
+
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+<%- include('partials/footer'); -%>

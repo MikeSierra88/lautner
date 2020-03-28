@@ -1,0 +1,13 @@
+<%- include('partials/header'); -%>
+<%- include('partials/navbar'); -%>
+
+Arlistak
+
+<p><a href="/arlistak/new">Uj arlista</a></p>
+
+<% arlistak.forEach(function(arlista){ %>
+    <p><%= arlista.url %> <%= arlista.title %></p>
+    
+<% }); %>
+
+<%- include('partials/footer'); -%>

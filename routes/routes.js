@@ -1,45 +1,110 @@
-var express = require('express');
-var router = express.Router();
+var express   = require('express'),
+    Arlista   = require('../models/arlista'),
+    Kategoria = require('../models/kategoria'),
+    Termek    = require('../models/termek');
+var router    = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.redirect('hazhoz');
+  res.redirect('arlistak');
 });
 
-var termekek = [
-  {nev: "Minyon", kategoria: "sutemeny", kiszereles: "darab", ar:"250 Ft"},
-  {nev: "Kardinalis", kategoria: "sutemeny", kiszereles: "darab", ar:"350 Ft"},
-  {nev: "Teasutemeny", kategoria: "sutemeny", kiszereles: "ledig", ar:"3000 Ft/kg"},
-  {nev: "Csokifagyi", kategoria: "fagyi", kiszereles: "doboz", ar:"1500 Ft"},
-  {nev: "Csokitorta", kategoria: "torta", kiszereles: "torta", ar:"4500 Ft"}
-];
+// var termekek = [
+//   {nev: "Minyon", kategoria: "sutemeny", kiszereles: "darab", ar:"250 Ft"},
+//   {nev: "Kardinalis", kategoria: "sutemeny", kiszereles: "darab", ar:"350 Ft"},
+//   {nev: "Teasutemeny", kategoria: "sutemeny", kiszereles: "ledig", ar:"3000 Ft/kg"},
+//   {nev: "Csokifagyi", kategoria: "fagyi", kiszereles: "doboz", ar:"1500 Ft"},
+//   {nev: "Csokitorta", kategoria: "torta", kiszereles: "torta", ar:"4500 Ft"}
+// ]
 
-var kategoriak = [
-  {kat: "sutemeny"},
-  {kat: "fagyi"},
-  {kat: "torta"}
-];
+// Seed database
 
-router.get('/hazhoz', function(req, res, next) {
-  res.render("hazhoz.ejs", {termekek:termekek, kategoriak:kategoriak});
+// Arlista.create({
+//   url: "hazhoz",
+//   title: "Házhoz szállítási ajánlatunk"
+//   }, function(err, arlista) {
+//     if (err) {
+//       console.log(err);
+//     } 
+// });
+
+// Arlista.findOne({ url: "hazhoz" }, function(err, foundArlista) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     var newKat = new Kategoria({
+//       kat: "Tortaszeletek",
+//       arlista: foundArlista._id,
+//       termekek: []
+//     });
+//     newKat.save(function(err) {
+//       if (err) { console.log(err) }
+//       else console.log("Saved");
+//     });
+//   }
+// });
+
+// Arlista.findOne({ url: "hazhoz" }, function(err, foundArlista) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     Kategoria.findOne({arlista: foundArlista._id}, function (err, foundKategoria) {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         var newTermek = new Termek({
+//           nev: "Minyon",
+//           kiszereles: "darab",
+//           ar: 250
+//         });
+//         foundKategoria.termekek.push(newTermek);
+//         foundKategoria.save(function(err) {
+//           if (err) { console.log(err) }
+//           else console.log("Saved");
+//         });
+//       }
+//     });
+//   }
+// });
+
+router.get('/arlistak', function(req, res, next) {
+  Arlista.find({}, function(err, arlistak){
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("arlistak", {arlistak: arlistak});
+    }
+  });
+});
+
+router.get('/arlistak/:arlistaUrl', function(req, res, next) {
+  Arlista.findOne({url: req.params.arlistaUrl}, function(err, foundArlista){
+    if (err) {
+      console.log(err);
+    } else {
+      if  (foundArlista) {
+        Kategoria.find({arlista: foundArlista._id}).exec(function (err, foundKategoriak) {
+          if (err) {
+            console.log(err);
+          } else {
+            
+            res.render("showArlista", {arlista: foundArlista, kategoriak: foundKategoriak});
+          }
+        });
+      } else {
+        res.redirect('/arlista');
+      }
+    }
+  });
 });
 
 router.post('/hazhoz', function (req, res, next) {
-  var newNev = req.body.nev;
-  var newKategoria = req.body.kategoria;
-  var newKiszereles = req.body.kiszereles;
-  var newAr = req.body.ar;
-  var newSuti = {nev: newNev, kategoria: newKategoria, kiszereles: newKiszereles, ar: newAr};
-  termekek.push(newSuti);
+  
   res.redirect('/hazhoz');
 });
 
-router.get('/hazhoz/new', function(req, res, next){
-  res.render('new.ejs', {kategoriak:kategoriak});
-});
-
-router.get('/husvet', function(req, res, next) {
-  res.render("husvet.ejs", {termekek:termekek, kategoriak:kategoriak});
+router.get('/arlistak/new', function(req, res, next){
+  res.render('new', {});
 });
 
 router.get('*', function(req, res, next) {
