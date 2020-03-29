@@ -13,10 +13,15 @@
     <tbody class="text-wrap">
       <% kategoriak.forEach(function(kategoria){ %>
         <tr class="thead-light">
-          <th scope="row" colspan="3"><%= kategoria.kat %></th>
-          <th scope="row"class='editcell'>
-              <a href="" class='deco-none'><i class="fas fa-edit"></i></a>
-              <a href="" class='deco-none'><i class="far fa-trash-alt"></i></a>
+            <th scope="row" colspan="3"><%= kategoria.kat %></th>
+            <th scope="row"class='editcell'>
+                <a href="" class='deco-none'><i class="fas fa-edit"></i></a>
+                <form id="<%=kategoria._id%>del" 
+                    action="/arlistak/<%=arlista.url%>/<%=kategoria._id%>?_method=DELETE" method="POST">
+                    <span class="float-right" onclick="document.getElementById('<%=kategoria._id%>del').submit()">
+                        <i class="far fa-trash-alt"></i>
+                    </span>
+                </form>
           </th>
         </tr>  
         <% kategoria.termekek.forEach(function(termek){ %>
@@ -29,7 +34,12 @@
             <td><%= termek.ar %><%=artipus%></td>
             <td class='editcell'>
                 <a href="" class='deco-none'><i class="fas fa-edit"></i></a>
-                <a href="" class='deco-none'><i class="far fa-trash-alt"></i></a>
+                <form id="<%=termek._id%>del" 
+                    action="/arlistak/<%=arlista.url%>/<%=kategoria._id%>/<%=termek._id%>?_method=DELETE" method="POST">
+                    <span class="float-right" onclick="document.getElementById('<%=termek._id%>del').submit()">
+                        <i class="far fa-trash-alt"></i>
+                    </span>
+                </form>
             </td>
           </tr>
         <% }); %>

@@ -108,15 +108,56 @@ router.post('/arlistak/:arlistaUrl/termek', async function(req, res, next) {
 });
 
 // DELETE arlista
-router.delete("/arlistak/:arlistaUrl", function(req, res){
-  res.send("delete route reached");
+router.delete("/arlistak/:arlistaUrl", async function(req, res){
+  try {
+    var foundArlista = await Arlista.findOne({ url: req.params.arlistaUrl});
+    var foundKategoriak = await Kategoria.find({arlista: foundArlista._id});
+    if (Array.isArray(foundKategoriak) && foundKategoriak.length > 0) {
+      foundKategoriak.forEach(function(kategoria){
+        Kategoria.findByIdAndRemove(kategoria._id, function(err){
+          if (err) {
+            res.render("error", {error: err});
+          }
+        });
+      });
+    }
+    console.log("trying to remove"+foundArlista._id);
+    Arlista.findByIdAndRemove(foundArlista._id, function(err){
+          if (err) {
+            res.render("error", {error: err});
+          }
+        });
+  } catch (err) {
+    res.render("error", {error: err});
+  }
+  res.redirect("/arlistak");
 });
 
 // DELETE kategoria
+router.delete("/arlistak/:arlistaUrl/:kategoria", function(req, res){
+  Kategoria.findByIdAndRemove(req.params.kategoria, function(err){
+    if (err) {
+      res.render("error", {error: err});
+    } else {
+      var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';
+      res.redirect(renderUrl);
+    }
+  });
+});
 
 // DELETE termek
-router.delete("/arlistak/:arlistaUrl/:kategoria/:termek", function(req, res){
-  res.send("delete route reached");
+router.delete("/arlistak/:arlistaUrl/:kategoria/:termek", async function(req, res){
+  try {
+    var foundKategoria = await Kategoria.
+      findById(req.params.kategoria)
+      foundKategoria.termekek.id(req.params.termek).remove();
+      var saveKategoria = await foundKategoria.save();
+      var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';
+      res.redirect(renderUrl);
+  } catch (err) {
+    res.render("error", {error: err});
+  }
+  
 });
 
 router.get('*', function(req, res, next) {
