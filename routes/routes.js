@@ -78,7 +78,7 @@ router.get('/arlistak/:arlistaUrl/edit', function(req, res, next) {
   });
 });
 
-// POST new termek
+// POST new termek, and new kategoria if needed
 router.post('/arlistak/:arlistaUrl/termek', async function(req, res, next) {
   var newTermek = new Termek({
         nev: req.body.nev,
@@ -94,7 +94,6 @@ router.post('/arlistak/:arlistaUrl/termek', async function(req, res, next) {
         termekek: [newTermek]
       });
       await ujKat.save();
-      console.log(ujKat);
     } else {
       var foundKategoria = await Kategoria.findById(req.body.kateg);
       foundKategoria.termekek.push(newTermek);
@@ -105,6 +104,28 @@ router.post('/arlistak/:arlistaUrl/termek', async function(req, res, next) {
   }
   var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';
   res.redirect(renderUrl);
+});
+
+// UPDATE termek
+router.put("/arlistak/:arlistaUrl/:kategoria/:termek", async function(req, res){
+  // find termek to update
+  // update termek
+  // redirect
+  try {
+    var foundKategoria = await Kategoria.findById(req.params.kategoria);
+    var termekToUpdate = foundKategoria.termekek.id(req.params.termek);
+    var newTermek = {
+      nev: req.body.editNev,
+      kiszereles: req.body.editKiszereles,
+      ar: Number(req.body.editAr)
+    }
+    termekToUpdate.set(newTermek);
+    await foundKategoria.save();
+    var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';
+    res.redirect(renderUrl);
+  } catch (err) {
+    res.render("error", {error: err});
+  }
 });
 
 // DELETE arlista
@@ -121,7 +142,6 @@ router.delete("/arlistak/:arlistaUrl", async function(req, res){
         });
       });
     }
-    console.log("trying to remove"+foundArlista._id);
     Arlista.findByIdAndRemove(foundArlista._id, function(err){
           if (err) {
             res.render("error", {error: err});
@@ -157,9 +177,9 @@ router.delete("/arlistak/:arlistaUrl/:kategoria/:termek", async function(req, re
   } catch (err) {
     res.render("error", {error: err});
   }
-  
 });
 
+// catch all - don't get lost
 router.get('*', function(req, res, next) {
   res.redirect('/');
 });

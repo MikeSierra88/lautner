@@ -10,11 +10,15 @@
         <% arlistak.forEach(function(arlista){ %>
         <li class="list-group-item">
             <a href="/arlistak/<%=arlista.url%>"><%= arlista.title %></a>
-            <form id="<%=arlista.url%>del" action="/arlistak/<%=arlista.url%>?_method=DELETE" method="POST">
-                <span class="float-right" onclick="document.getElementById('<%=arlista.url%>del').submit()">
-                        <i class="far fa-trash-alt"></i>
-                </span>
-            </form>
+            <span class="float-right">
+                <a class="deco-none" href="/arlistak/<%=arlista.url%>/edit" class='deco-none'><i class="fas fa-edit"></i></a>
+                <form class="d-inline" id="<%=arlista.url%>del" action="/arlistak/<%=arlista.url%>?_method=DELETE" method="POST">
+                    <span class="btn-link deco-none" onclick="document.getElementById('<%=arlista.url%>del').submit()">
+                            <i class="far fa-trash-alt"></i>
+                    </span>
+                </form>
+            </span>
+            
         </li>
         <% }); %>
     </ul>
