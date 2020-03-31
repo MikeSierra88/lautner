@@ -11,19 +11,47 @@
       </tr>
     </thead>
     <tbody class="text-wrap">
+      <!-- Each Kategoria -->
       <% kategoriak.forEach(function(kategoria){ %>
         <tr class="thead-light">
             <th scope="row" colspan="3"><%= kategoria.kat %></th>
             <th scope="row"class='editcell'>
-                <a href="" class='deco-none'><i class="fas fa-edit"></i></a>
-                <form class="d-inline" id="<%=kategoria._id%>del" 
-                    action="/arlistak/<%=arlista.url%>/<%=kategoria._id%>?_method=DELETE" method="POST">
-                    <span class="btn-link deco-none float-right" onclick="document.getElementById('<%=kategoria._id%>del').submit()">
-                        <i class="far fa-trash-alt"></i>
-                    </span>
-                </form>
+                <!-- Edit Kategoria Button -->
+                <span class="btn-link deco-none editkatbtn"
+                    data-kategoriaid="<%=kategoria._id%>"
+                    data-kategoriakat="<%=kategoria.kat%>"
+                    data-toggle="collapse" data-target=".editrow<%=kategoria._id%>"
+                    aria-expanded="false" aria-controls="editrow<%=kategoria._id%>"
+                    id="<%=kategoria._id%>EditBtn" role="button">
+                    <i class="fas fa-edit"></i>
+                </span>
+                <!-- Delete Kategoria Button -->
+                <span role="button" class="btn-link deco-none float-right" 
+                data-toggle="modal" data-target="#deleteConfirmModal"
+                data-tipus="kategoria"
+                data-arlistaurl="<%=arlista.url%>"
+                data-kategoriaid="<%=kategoria._id%>"
+                data-kategoriakat="<%=kategoria.kat%>">
+                    <i class="far fa-trash-alt"></i>
+                </span>
           </th>
-        </tr>  
+        </tr>
+        <!-- Edit Kategoria row -->
+        <tr class="editrow<%=kategoria._id%> collapse" >
+            <form id="edit<%=kategoria._id%>"
+                    action="/arlistak/<%=arlista.url%>/<%=kategoria._id%>?_method=PUT" method="POST">
+            <td >
+                <label for='editKatKat' class='col-form-label'>Uj kategoria nev</label>
+            </td>
+            <td colspan="2">
+                <input type='text' class='form-control editKat<%=kategoria._id%>' name='editKatKat' id='editKatKat'>
+            </td>
+            <td>
+                <button class="btn btn-primary" type="submit"><i class="far fa-save"></i></button>
+            </td>
+            </form>
+        </tr>
+        <!-- Termek row -->
         <% kategoria.termekek.forEach(function(termek){ %>
           <% var artipus = ""; %>
           <% if (['lédig', 'kg'].includes(termek.kiszereles)) {artipus = " Ft/kg"}
@@ -33,18 +61,23 @@
             <td><%= termek.kiszereles %></td>
             <td><%= termek.ar %><%=artipus%></td>
             <td class='editcell'>
+                <!-- Edit Termek Button -->
                 <span data-kategoria="<%=JSON.stringify(kategoria)%>" 
                       data-termek="<%=JSON.stringify(termek)%>" 
                       data-arlistaurl="<%=arlista.url%>"
                       id="<%=termek._id%>edit" class="btn-link deco-none edittermekbtn"
                       data-toggle="collapse" data-target="#editTermekDiv" 
                       aria-expanded="false" aria-controls="editTermekDiv"><i class="fas fa-edit"></i></span>
-                <form class="d-inline" id="<%=termek._id%>del" 
-                    action="/arlistak/<%=arlista.url%>/<%=kategoria._id%>/<%=termek._id%>?_method=DELETE" method="POST">
-                    <span class="btn-link deco-none float-right" onclick="document.getElementById('<%=termek._id%>del').submit()">
-                        <i class="far fa-trash-alt"></i>
-                    </span>
-                </form>
+                <!-- Delete Termek Button -->
+                <span role="button" class="btn-link deco-none float-right" 
+                    data-toggle="modal" data-target="#deleteConfirmModal"
+                    data-tipus="termek"
+                    data-arlistaurl="<%=arlista.url%>"
+                    data-kategoria="<%=JSON.stringify(kategoria)%>"
+                    data-termeknev="<%=termek.nev%>"
+                    data-termekid="<%=termek._id%>" >
+                    <i class="far fa-trash-alt"></i>
+                </span>
             </td>
           </tr>
         <% }); %>
@@ -70,14 +103,12 @@
         <div class='form-group row'>
             <label for='editNev' class='col-sm-2 col-form-label'>Nev</label>
             <div class='col-sm-10'>
-                <input type='hidden' class='form-control' name='editTermekId' id='editTermekId'>
                 <input type='text' class='form-control' name='editNev' id='editTermekNev'>
             </div>
         </div>
         <div class='form-group row'>
             <label for='editKateg' class='col-sm-2 col-form-label'>Kategoria</label>
             <div class='col-sm-10'>
-                <input type='hidden' class='form-control' name='kategId' id='editKategId' readonly>
                 <input type='text' class='form-control' name='editKateg' id='editKateg' readonly>
             </div>
         </div>
@@ -149,6 +180,9 @@
         <button type="submit" class="btn btn-primary mb-2">Submit</button>
     </form>
 </div>
+
+<!-- Modal delete confirm -->
+<%- include('partials/deleteConfirm'); -%>
 
 <script src="/javascript/dbedit.js" defer="defer"></script>
 <%- include('partials/footer'); -%>

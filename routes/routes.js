@@ -24,12 +24,12 @@ router.get('/arlistak', function(req, res, next) {
 router.get('/arlistak/:arlistaUrl', function(req, res, next) {
   Arlista.findOne({url: req.params.arlistaUrl}, function(err, foundArlista){
     if (err) {
-      console.log(err);
+      res.render("error", {error: err});
     } else {
       if  (foundArlista) {
         Kategoria.find({arlista: foundArlista._id}).exec(function (err, foundKategoriak) {
           if (err) {
-            console.log(err);
+            res.render("error", {error: err});
           } else {
             res.render("showArlista", {arlista: foundArlista, kategoriak: foundKategoriak});
           }
@@ -47,26 +47,27 @@ router.post('/arlista', async function (req, res, next) {
       url: req.body.url,
       title: req.body.title
     });
-  try {
-    
-    arlista.save();
-  } catch (err) {
-    console.log(err);
-  }
-  var redirectUrl = "/arlistak/"+arlista.url+"/edit"
-  res.redirect(redirectUrl);
+  
+  await arlista.save()
+    .then(function(){
+      var redirectUrl = "/arlistak/"+arlista.url+"/edit";
+      res.redirect(redirectUrl);
+    })
+    .catch(function(err){
+      res.render("error", {error: err});
+    });
 });
 
 // GET show arlista edit form
 router.get('/arlistak/:arlistaUrl/edit', function(req, res, next) {
   Arlista.findOne({url: req.params.arlistaUrl}, function(err, foundArlista){
     if (err) {
-      console.log(err);
+      res.render("error", {error: err});
     } else {
       if  (foundArlista) {
         Kategoria.find({arlista: foundArlista._id}).exec(function (err, foundKategoriak) {
           if (err) {
-            console.log(err);
+            res.render("error", {error: err});
           } else {
             res.render("editArlista", {arlista: foundArlista, kategoriak: foundKategoriak});
           }
@@ -100,17 +101,27 @@ router.post('/arlistak/:arlistaUrl/termek', async function(req, res, next) {
       await foundKategoria.save();
     }
   } catch (err) {
-    console.log(err);
+    res.render("error", {error: err});
   }
   var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';
   res.redirect(renderUrl);
 });
 
 // UPDATE termek
+router.put("/arlistak/:arlistaUrl/:kategoria", async function(req, res){
+  try {
+    var foundKategoria = await Kategoria.findById(req.params.kategoria);
+    foundKategoria.kat = req.body.editKatKat;
+    await foundKategoria.save();
+    var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';
+    res.redirect(renderUrl);
+  } catch (err) {
+    res.render("error", {error: err});
+  }
+});
+
+// UPDATE termek
 router.put("/arlistak/:arlistaUrl/:kategoria/:termek", async function(req, res){
-  // find termek to update
-  // update termek
-  // redirect
   try {
     var foundKategoria = await Kategoria.findById(req.params.kategoria);
     var termekToUpdate = foundKategoria.termekek.id(req.params.termek);
@@ -118,7 +129,7 @@ router.put("/arlistak/:arlistaUrl/:kategoria/:termek", async function(req, res){
       nev: req.body.editNev,
       kiszereles: req.body.editKiszereles,
       ar: Number(req.body.editAr)
-    }
+    };
     termekToUpdate.set(newTermek);
     await foundKategoria.save();
     var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';
@@ -169,7 +180,7 @@ router.delete("/arlistak/:arlistaUrl/:kategoria", function(req, res){
 router.delete("/arlistak/:arlistaUrl/:kategoria/:termek", async function(req, res){
   try {
     var foundKategoria = await Kategoria.
-      findById(req.params.kategoria)
+      findById(req.params.kategoria);
       foundKategoria.termekek.id(req.params.termek).remove();
       var saveKategoria = await foundKategoria.save();
       var renderUrl = '/arlistak/'+req.params.arlistaUrl+'/edit';

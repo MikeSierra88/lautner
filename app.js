@@ -1,14 +1,13 @@
-var createError  = require('http-errors'),
-    express      = require('express'),
-    path         = require('path'),
-    cookieParser = require('cookie-parser'),
-    bodyParser   = require('body-parser'),
-    logger       = require('morgan'),
-    indexRouter  = require('./routes/routes'),
-    mongoose     = require('mongoose'),
+var path           = require('path'),
+    logger         = require('morgan'),
+    express        = require('express'),
+    mongoose       = require('mongoose'),
+    bodyParser     = require('body-parser'),
+    createError    = require('http-errors'),
+    cookieParser   = require('cookie-parser'),
+    indexRouter    = require('./routes/routes'),
     methodOverride = require('method-override');
-
-
+    
 var app = express();
 
 // connect database using mongoose

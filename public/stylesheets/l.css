@@ -29,6 +29,13 @@ nav {
     margin: auto;
 }
 
+#editKatKat {
+    width: 95%;
+    height: 95%;
+    margin: auto;
+    padding-left: 0.5rem;
+}
+
 #footer-logo {
     width: 40%;
     max-width: 300px;
