@@ -47,14 +47,14 @@ async function seed() {
   ];
   
   var arlista = new Arlista({
-  url: "hazhoz2",
+  url: "hazhoz",
   title: "Házhoz szállítási árlista"
   });
   
   try {
     await arlista.save();
     console.log("arlista saved");
-    var foundArlista = await Arlista.findOne({ url: "hazhoz2" });
+    var foundArlista = await Arlista.findOne({ url: "hazhoz" });
     for (var i = 0; i < testKategoriak.length; i++) 
     {
       var newKat = new Kategoria({

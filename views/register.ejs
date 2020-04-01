@@ -1,0 +1,17 @@
+<%- include('partials/header'); -%>
+<%- include('partials/navbar'); -%>
+
+<div class="container mt-5">
+    <h4>Sign up form</h1>
+    <form action="/register" method="POST">
+        <div class="form-group">
+            <input type="text" name="username" placeholder="username">
+            <input type="password" name="password" placeholder="password">
+            <button class="btn btn-primary" type="submit">Sign up</button>
+        </div>
+</form>
+</div>
+
+
+
+<%- include('partials/footer'); -%>

@@ -29,6 +29,10 @@ nav {
     margin: auto;
 }
 
+.editArlBtn {
+    font-size: 1rem;
+}
+
 #editKatKat {
     width: 95%;
     height: 95%;

@@ -49,11 +49,5 @@ $(document).ready(function(){
            $("#modalDeleteConfirmForm").attr('action', formActionTermek);
        }
    });
+  
 });
-
-//<form class="d-inline" id="del<%=termek._id%>" 
-  //                  action="/arlistak/<%=arlista.url%>/<%=kategoria._id%>/<%=termek._id%>?_method=DELETE" method="POST">
-//                    <span class="btn-link deco-none float-right" onclick="document.getElementById('del<%=termek._id%>').submit()">
-//                        <i class="far fa-trash-alt"></i>
-//                    </span>
-//                </form>
