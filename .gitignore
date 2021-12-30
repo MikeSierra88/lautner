@@ -1,3 +1,10 @@
+# Editor-based HTTP Client requests
+/httpRequests/
+.idea/
+
+# Firebase
+.firebase/
+
 # Logs
 logs
 *.log
