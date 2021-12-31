@@ -14,4 +14,4 @@ const indexRouter = require('./routes/routes');
 
 app.use('/', indexRouter);
 
-exports.app = functions.region('europe-west1').https.onRequest(app);
+exports.app = functions.region('us-central1').https.onRequest(app);
